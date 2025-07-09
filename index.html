@@ -14,7 +14,7 @@
 	</style>
 	<script>
 	// TODO: 2025-07-08: from 8 to 10:30. Then 15 min around 11.
-	// TODO: 2025-07-09: From 11 to 12:35
+	// TODO: 2025-07-09: From 11 to 12:35. 1:52 to
 
 
 		const processData = (data) => {
@@ -57,7 +57,7 @@
 		/**
 		 *
 		 */
-		createPieSegmentSVGPath = ({ startAngle, endAngle, r0 = 5, r1 = 50, centerX = 50, centerY = 50 } = {}) => {
+		createPieSegmentSVGPath = ({ startAngle, endAngle, r0 = 1, r1 = 50, centerX = 50, centerY = 50 } = {}) => {
 			// TODO: allow for different coords/centers/radii. for now I'm going to have the SVG have its virtual canvas (Whatever that's called) be 100 x 100. Simpler that way. Pie chart will go edge-to-edge.
 			// TODO: Think about this:: ya know.... in so many ways SVG is easier to manage, I think, than canvas. A silly, terrible idea for a canvas implementation would be to somehow convert SVG to a base64 image or some such.
 
@@ -109,16 +109,22 @@
 			console.log('data after sorting and mapping angles etc', data);
 
 			data.forEach((d, i) => {
-				if (true || i === 4) {
 				// create a path element for each segment
-				const path = `<path d="${createPieSegmentSVGPath(d)}" fill="${d.color}" stroke="teal" stroke-width="0.5" />`;
+				const path = `<path d="${createPieSegmentSVGPath(d)}" fill="${d.color}" stroke="teal" stroke-width="0.5" stroke-cap="round" data-datum="${JSON.stringify(d).replaceAll('"', '&quot;')}" />`;
 
 				document.getElementById('pie-chart').innerHTML += path;
-				}
 			});
 		};
 
 		drawPieChart(pieData, pieConfig);
+
+		window.addEventListener('mouseover', (e) => {
+			const elem = e.target;
+			if (elem.hasAttribute('data-datum')) {
+				const datum = JSON.parse(elem.getAttribute('data-datum'));
+				console.log(datum);
+			}
+		});
 	</script>
 </body>
 </html>
