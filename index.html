@@ -1,0 +1,124 @@
+<html>
+<head>
+	<title>A Pie Chart</title>
+</head>
+<body>
+	<svg id="pie-chart" width="1000" height="1000" viewBox="0 0 100 100"></svg>
+	<style>
+		path {
+			transition: all 0.2s ease-in-out;
+		}
+		path:hover {
+			fill: pink;
+		}
+	</style>
+	<script>
+	// TODO: 2025-07-08: from 8 to 10:30. Then 15 min around 11.
+	// TODO: 2025-07-09: From 11 to 12:35
+
+
+		const processData = (data) => {
+			// Get total count
+			const total = data.reduce((runningSum, datum) => datum.value + runningSum, 0);
+
+			/// Populate data throughout. Right now this is unnecessary/excessive, but it allows for customizability in the future
+
+			data = data.map((d) => {
+				d.scale = {
+					min: 0,
+					max: total,
+				};
+
+				d.percentage = (d.value - d.scale.min) / (d.scale.max - d.scale.min);
+
+				return d;
+			});
+
+			return data;
+		};
+
+		const pieData = processData([
+			{label: 'Blueberry', value: 12, color: 'red'},
+			{label: 'Pi', value: 7, color: 'orange'},
+			{label: 'Snozzberry', value: 1, color: 'green'},
+			{label: 'Pumpkin', value: 17, color: 'yellow'},
+			{label: 'Apple', value: 26, color: 'blue'},
+		]);
+
+
+		// TODO: the gap necessitates creating a donut chart
+		const pieConfig = {
+			type: 'pie',
+			sortOrder: 'value', // TODO: allow for enum-by-way-of-string or CB
+			gap: 2, // in degrees (seems good, yea? I mean, certainly not radians; that would be basically anti-user. Or! We could use this opportunity to champion Tau (which btw, Tau := 0.5 * Pi. See: https://www.tauday.com/tau-manifesto and join the party))
+		};
+
+
+		/**
+		 *
+		 */
+		createPieSegmentSVGPath = ({ startAngle, endAngle, r0 = 5, r1 = 50, centerX = 50, centerY = 50 } = {}) => {
+			// TODO: allow for different coords/centers/radii. for now I'm going to have the SVG have its virtual canvas (Whatever that's called) be 100 x 100. Simpler that way. Pie chart will go edge-to-edge.
+			// TODO: Think about this:: ya know.... in so many ways SVG is easier to manage, I think, than canvas. A silly, terrible idea for a canvas implementation would be to somehow convert SVG to a base64 image or some such.
+
+			// Everything is a donut, if you want gaps between segments!
+
+			// Imagine, for this explanation, that the pie/donut segment
+			// goes straight up, curves clockwise (to, say, 2 o'clock), then connects back to the "center"
+			// We've got two arcs: inner and outer.
+			// (x0, y0) := the most-CCW (CCW - counter-clockwise aka anti-clockwise) point on the inner arc
+			// (x1, y1) := the most-CCW point on the outer arc
+			// (x2, y2) := the most-CW point on the outer arc
+			// (x3, y3) := the most-CW point on the inner arc
+
+			const x0 = centerX + r0 * Math.cos(startAngle * Math.PI / 180);
+			const y0 = centerY + r0 * Math.sin(startAngle * Math.PI / 180);
+			const x1 = centerX + r1 * Math.cos(startAngle * Math.PI / 180);
+			const y1 = centerY + r1 * Math.sin(startAngle * Math.PI / 180);
+			const x2 = centerX + r1 * Math.cos(endAngle * Math.PI / 180);
+			const y2 = centerY + r1 * Math.sin(endAngle * Math.PI / 180);
+			const x3 = centerX + r0 * Math.cos(endAngle * Math.PI / 180);
+			const y3 = centerY + r0 * Math.sin(endAngle * Math.PI / 180);
+
+			let path = `M ${x0},${y0}`; // Start of inner
+			path += ` L ${x1},${y1}`; // Line to start of outer
+			path += ` A ${r1},${r1} 0 0 1 ${x2},${y2}`; // Arc to end of outer
+			path += ` L ${x3},${y3}`; // Line to end of inner
+			path += ` A ${r0},${r0} 0 0 0 ${x0},${y0}`; // Reverse-arc to start of inner
+			return path;
+		}
+
+		drawPieChart = (data, config) => {
+			// we don't have 360 degrees available to us, due to the gaps between segments
+			const totalDegreesForSegments = 360;// - (data.length * config.gap); // Note: linearly, this would be data.length-1. But since we're in a circle, we have 1 extra to close out between the last and first
+			data = data
+				.sort((a, b) => a[config.sortOrder] - b[config.sortOrder]) // TODO: allow for sortOrder cb func. for now, higher sortOrder values come first
+				.map((d, index) => {
+					if (index === 0) {
+						d.startAngle = 0;
+						d.endAngle = d.startAngle + (d.percentage * totalDegreesForSegments);
+					} else {
+						d.startAngle = data[index - 1].endAngle;// + pieConfig.gap;
+						d.endAngle = d.startAngle + (d.percentage * totalDegreesForSegments);
+					}
+
+					return d;
+				}
+			);
+
+			console.log('data after sorting and mapping angles etc', data);
+
+			data.forEach((d, i) => {
+				if (true || i === 4) {
+				// create a path element for each segment
+				const path = `<path d="${createPieSegmentSVGPath(d)}" fill="${d.color}" stroke="teal" stroke-width="0.5" />`;
+
+				document.getElementById('pie-chart').innerHTML += path;
+				}
+			});
+		};
+
+		drawPieChart(pieData, pieConfig);
+	</script>
+</body>
+</html>
