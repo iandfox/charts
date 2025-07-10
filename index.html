@@ -3,7 +3,8 @@
 	<title>A Pie Chart</title>
 </head>
 <body>
-	<svg id="pie-chart" width="1000" height="1000" viewBox="0 0 100 100"></svg>
+	<h1>Pie Chart</h1>
+
 	<style>
 		path {
 			transition: all 0.2s ease-in-out;
@@ -12,11 +13,42 @@
 			fill: pink;
 		}
 	</style>
+	<div id="chart-container">
+		<svg id="pie-chart" width="700" height="700" viewBox="0 0 100 100"></svg>
+	</div>
+
+
+	<hr />
+	<h3>Tooltips that would normally be hidden / generated on demand:</h3>
+	<style>
+		.tooltip {
+			border: double 4px purple;
+			background: rgba(255, 255, 255, 0.7);
+			width: 250px;
+			padding: 13px;
+
+			/* Give an illusion (really, a proof of concept) of animating the tooltip into place */
+			transition: all 0.2s ease-in-out;
+			top: 375px;
+			left: 350px;
+		}
+	</style>
+	<div id="tooltip-Blueberry" class="tooltip">
+		<strong>Blueberry</strong>: 12
+	</div>
+	<div id="tooltip-Pi" class="tooltip">
+		<strong>Pi</strong>: 7
+	</div>
+	<div id="tooltip-Snozzberry" class="tooltip">
+		<strong>Snozzberry</strong>: 1
+	</div>
+	<div id="tooltip-Pumpkin" class="tooltip">
+		<strong>Pumpkin</strong>: 17
+	</div>
+	<div id="tooltip-Apple" class="tooltip">
+		<strong>Apple</strong>: 26
+	</div>
 	<script>
-	// TODO: 2025-07-08: from 8 to 10:30. Then 15 min around 11.
-	// TODO: 2025-07-09: From 11 to 12:35. 1:52 to
-
-
 		const processData = (data) => {
 			// Get total count
 			const total = data.reduce((runningSum, datum) => datum.value + runningSum, 0);
@@ -120,9 +152,22 @@
 
 		window.addEventListener('mouseover', (e) => {
 			const elem = e.target;
+			const {x, y, width, height, top, left, bottom, right} = elem.getBoundingClientRect();
 			if (elem.hasAttribute('data-datum')) {
 				const datum = JSON.parse(elem.getAttribute('data-datum'));
-				console.log(datum);
+				const tooltip = document.getElementById(`tooltip-${datum.label}`);
+				tooltip.style.position = 'fixed'; // really, we'll want this to be position: absolute. but the calculations for proof of concept are easier with position: fixed
+				tooltip.style.left = `${left + 0.5 * width}px`;
+				tooltip.style.top = `${top + 0.5 * height}px`;
+			}
+		});
+
+		window.addEventListener('mouseout', (e) => {
+			const elem = e.target;
+			if (elem.hasAttribute('data-datum')) {
+				const datum = JSON.parse(elem.getAttribute('data-datum'));
+				const tooltip = document.getElementById(`tooltip-${datum.label}`);
+				tooltip.setAttribute('style', '');
 			}
 		});
 	</script>
