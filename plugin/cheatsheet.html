@@ -1,0 +1,321 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Cheat Sheet for Charts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.mx-auto{margin-left:auto;margin-right:auto}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-2{margin-top:0.5rem}.block{display:block}.grid{display:grid}.max-w-6xl{max-width:72rem}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-2{padding:0.5rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}@media (min-width: 1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">SVG Cheat Sheet for Charts</h1>
+
+        <!-- Basic SVG Structure -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Basic Structure</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">SVG Container</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="400" height="300" viewBox="0 0 400 300" class="border-gray-200"&gt;
+&lt;rect x="10" y="10" width="380" height="280" fill="none" stroke="#E5E7EB" stroke-dasharray="5,5"&gt;&lt;/rect&gt;
+&lt;text x="200" y="150" text-anchor="middle" fill="#9CA3AF" font-size="14"&gt;SVG Container (400x300)&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="400" height="300" viewBox="0 0 400 300" class="border-gray-200">
+                            <rect x="10" y="10" width="380" height="280" fill="none" stroke="#E5E7EB" stroke-dasharray="5,5"></rect>
+                            <text x="200" y="150" text-anchor="middle" fill="#9CA3AF" font-size="14">SVG Container (400x300)</text>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Groups & Transforms</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="150" viewBox="0 0 200 150"&gt;
+&lt;rect x="10" y="10" width="30" height="30" fill="#3B82F6" opacity="0.5"&gt;&lt;/rect&gt;
+&lt;text x="25" y="55" text-anchor="middle" font-size="10" fill="#6B7280"&gt;Original&lt;/text&gt;
+&lt;g transform="translate(60, 20)"&gt;
+&lt;rect x="0" y="0" width="30" height="30" fill="#10B981"&gt;&lt;/rect&gt;
+&lt;text x="15" y="45" text-anchor="middle" font-size="10" fill="#6B7280"&gt;Translated&lt;/text&gt;
+&lt;/g&gt;
+&lt;g transform="translate(130, 35) rotate(45)"&gt;
+&lt;rect x="-15" y="-15" width="30" height="30" fill="#F59E0B"&gt;&lt;/rect&gt;
+&lt;text x="0" y="35" text-anchor="middle" font-size="10" fill="#6B7280"&gt;Rotated&lt;/text&gt;
+&lt;/g&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <rect x="10" y="10" width="30" height="30" fill="#3B82F6" opacity="0.5"></rect>
+                            <text x="25" y="55" text-anchor="middle" font-size="10" fill="#6B7280">Original</text>
+                            <g transform="translate(60, 20)">
+                                <rect x="0" y="0" width="30" height="30" fill="#10B981"></rect>
+                                <text x="15" y="45" text-anchor="middle" font-size="10" fill="#6B7280">Translated</text>
+                            </g>
+                            <g transform="translate(130, 35) rotate(45)">
+                                <rect x="-15" y="-15" width="30" height="30" fill="#F59E0B"></rect>
+                                <text x="0" y="35" text-anchor="middle" font-size="10" fill="#6B7280">Rotated</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie & Donut Charts -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Pie &amp; Donut Charts</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Path Arc</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="200" viewBox="0 0 200 200"&gt;
+&lt;path d="M 100,100 L 100,50 A 50,50 0 0,1 150,100 Z" fill="#3B82F6" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;path d="M 100,100 L 150,100 A 50,50 0 0,1 100,150 Z" fill="#10B981" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;path d="M 100,100 L 100,150 A 50,50 0 0,1 50,100 Z" fill="#F59E0B" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;path d="M 100,100 L 50,100 A 50,50 0 0,1 100,50 Z" fill="#EF4444" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;text x="100" y="25" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Pie Chart&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <p class="text-xs text-gray-500 mt-2">large-arc: 0 or 1, sweep: 0 or 1</p>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <path d="M 100,100 L 100,50 A 50,50 0 0,1 150,100 Z" fill="#3B82F6" stroke="#fff" stroke-width="2"></path>
+                            <path d="M 100,100 L 150,100 A 50,50 0 0,1 100,150 Z" fill="#10B981" stroke="#fff" stroke-width="2"></path>
+                            <path d="M 100,100 L 100,150 A 50,50 0 0,1 50,100 Z" fill="#F59E0B" stroke="#fff" stroke-width="2"></path>
+                            <path d="M 100,100 L 50,100 A 50,50 0 0,1 100,50 Z" fill="#EF4444" stroke="#fff" stroke-width="2"></path>
+                            <text x="100" y="25" text-anchor="middle" font-size="12" fill="#6B7280">Pie Chart</text>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Circle (for donut center)</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="200" viewBox="0 0 200 200"&gt;
+&lt;path d="M 100,100 L 100,50 A 50,50 0 0,1 150,100 Z" fill="#3B82F6" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;path d="M 100,100 L 150,100 A 50,50 0 0,1 100,150 Z" fill="#10B981" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;path d="M 100,100 L 100,150 A 50,50 0 0,1 50,100 Z" fill="#F59E0B" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;path d="M 100,100 L 50,100 A 50,50 0 0,1 100,50 Z" fill="#EF4444" stroke="#fff" stroke-width="2"&gt;&lt;/path&gt;
+&lt;circle cx="100" cy="100" r="30" fill="#fff" stroke="#E5E7EB" stroke-width="2"&gt;&lt;/circle&gt;
+&lt;text x="100" y="25" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Donut Chart&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <path d="M 100,100 L 100,50 A 50,50 0 0,1 150,100 Z" fill="#3B82F6" stroke="#fff" stroke-width="2"></path>
+                            <path d="M 100,100 L 150,100 A 50,50 0 0,1 100,150 Z" fill="#10B981" stroke="#fff" stroke-width="2"></path>
+                            <path d="M 100,100 L 100,150 A 50,50 0 0,1 50,100 Z" fill="#F59E0B" stroke="#fff" stroke-width="2"></path>
+                            <path d="M 100,100 L 50,100 A 50,50 0 0,1 100,50 Z" fill="#EF4444" stroke="#fff" stroke-width="2"></path>
+                            <circle cx="100" cy="100" r="30" fill="#fff" stroke="#E5E7EB" stroke-width="2"></circle>
+                            <text x="100" y="25" text-anchor="middle" font-size="12" fill="#6B7280">Donut Chart</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bar Charts -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Bar Charts</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Rectangle</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="200" viewBox="0 0 200 200"&gt;
+&lt;rect x="20" y="120" width="25" height="60" fill="#3B82F6" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="50" y="100" width="25" height="80" fill="#10B981" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="80" y="80" width="25" height="100" fill="#F59E0B" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="110" y="60" width="25" height="120" fill="#EF4444" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="140" y="90" width="25" height="90" fill="#8B5CF6" rx="2"&gt;&lt;/rect&gt;
+&lt;line x1="15" y1="180" x2="170" y2="180" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;text x="100" y="25" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Bar Chart&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <rect x="20" y="120" width="25" height="60" fill="#3B82F6" rx="2"></rect>
+                            <rect x="50" y="100" width="25" height="80" fill="#10B981" rx="2"></rect>
+                            <rect x="80" y="80" width="25" height="100" fill="#F59E0B" rx="2"></rect>
+                            <rect x="110" y="60" width="25" height="120" fill="#EF4444" rx="2"></rect>
+                            <rect x="140" y="90" width="25" height="90" fill="#8B5CF6" rx="2"></rect>
+                            <line x1="15" y1="180" x2="170" y2="180" stroke="#E5E7EB" stroke-width="1"></line>
+                            <text x="100" y="25" text-anchor="middle" font-size="12" fill="#6B7280">Bar Chart</text>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Horizontal Bar</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="200" viewBox="0 0 200 200"&gt;
+&lt;rect x="30" y="30" width="80" height="20" fill="#3B82F6" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="30" y="60" width="120" height="20" fill="#10B981" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="30" y="90" width="100" height="20" fill="#F59E0B" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="30" y="120" width="140" height="20" fill="#EF4444" rx="2"&gt;&lt;/rect&gt;
+&lt;rect x="30" y="150" width="60" height="20" fill="#8B5CF6" rx="2"&gt;&lt;/rect&gt;
+&lt;line x1="30" y1="25" x2="30" y2="175" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;text x="100" y="15" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Horizontal Bar Chart&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <rect x="30" y="30" width="80" height="20" fill="#3B82F6" rx="2"></rect>
+                            <rect x="30" y="60" width="120" height="20" fill="#10B981" rx="2"></rect>
+                            <rect x="30" y="90" width="100" height="20" fill="#F59E0B" rx="2"></rect>
+                            <rect x="30" y="120" width="140" height="20" fill="#EF4444" rx="2"></rect>
+                            <rect x="30" y="150" width="60" height="20" fill="#8B5CF6" rx="2"></rect>
+                            <line x1="30" y1="25" x2="30" y2="175" stroke="#E5E7EB" stroke-width="1"></line>
+                            <text x="100" y="15" text-anchor="middle" font-size="12" fill="#6B7280">Horizontal Bar Chart</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Line Charts -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Line Charts</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Polyline</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="150" viewBox="0 0 200 150"&gt;
+&lt;polyline points="20,100 50,80 80,120 110,60 140,90 170,50" fill="none" stroke="#EF4444" stroke-width="2"&gt;&lt;/polyline&gt;
+&lt;circle cx="20" cy="100" r="3" fill="#EF4444"&gt;&lt;/circle&gt;
+&lt;circle cx="50" cy="80" r="3" fill="#EF4444"&gt;&lt;/circle&gt;
+&lt;circle cx="80" cy="120" r="3" fill="#EF4444"&gt;&lt;/circle&gt;
+&lt;circle cx="110" cy="60" r="3" fill="#EF4444"&gt;&lt;/circle&gt;
+&lt;circle cx="140" cy="90" r="3" fill="#EF4444"&gt;&lt;/circle&gt;
+&lt;circle cx="170" cy="50" r="3" fill="#EF4444"&gt;&lt;/circle&gt;
+&lt;text x="100" y="20" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Line Chart&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <polyline points="20,100 50,80 80,120 110,60 140,90 170,50" fill="none" stroke="#EF4444" stroke-width="2"></polyline>
+                            <circle cx="20" cy="100" r="3" fill="#EF4444"></circle>
+                            <circle cx="50" cy="80" r="3" fill="#EF4444"></circle>
+                            <circle cx="80" cy="120" r="3" fill="#EF4444"></circle>
+                            <circle cx="110" cy="60" r="3" fill="#EF4444"></circle>
+                            <circle cx="140" cy="90" r="3" fill="#EF4444"></circle>
+                            <circle cx="170" cy="50" r="3" fill="#EF4444"></circle>
+                            <text x="100" y="20" text-anchor="middle" font-size="12" fill="#6B7280">Line Chart</text>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Path (smooth curves)</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="150" viewBox="0 0 200 150"&gt;
+&lt;path d="M 20,100 Q 45,80 70,90 T 120,85 Q 145,70 170,80" fill="none" stroke="#8B5CF6" stroke-width="2"&gt;&lt;/path&gt;
+&lt;circle cx="20" cy="100" r="3" fill="#8B5CF6"&gt;&lt;/circle&gt;
+&lt;circle cx="70" cy="90" r="3" fill="#8B5CF6"&gt;&lt;/circle&gt;
+&lt;circle cx="120" cy="85" r="3" fill="#8B5CF6"&gt;&lt;/circle&gt;
+&lt;circle cx="170" cy="80" r="3" fill="#8B5CF6"&gt;&lt;/circle&gt;
+&lt;text x="100" y="20" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Smooth Line Chart&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <path d="M 20,100 Q 45,80 70,90 T 120,85 Q 145,70 170,80" fill="none" stroke="#8B5CF6" stroke-width="2"></path>
+                            <circle cx="20" cy="100" r="3" fill="#8B5CF6"></circle>
+                            <circle cx="70" cy="90" r="3" fill="#8B5CF6"></circle>
+                            <circle cx="120" cy="85" r="3" fill="#8B5CF6"></circle>
+                            <circle cx="170" cy="80" r="3" fill="#8B5CF6"></circle>
+                            <text x="100" y="20" text-anchor="middle" font-size="12" fill="#6B7280">Smooth Line Chart</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Elements -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Common Elements</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Text Labels</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="150" viewBox="0 0 200 150"&gt;
+&lt;text x="100" y="30" text-anchor="middle" font-size="16" fill="#374151" font-weight="bold"&gt;Chart Title&lt;/text&gt;
+&lt;text x="20" y="60" text-anchor="start" font-size="12" fill="#6B7280"&gt;Start&lt;/text&gt;
+&lt;text x="100" y="60" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Middle&lt;/text&gt;
+&lt;text x="180" y="60" text-anchor="end" font-size="12" fill="#6B7280"&gt;End&lt;/text&gt;
+&lt;text x="100" y="90" text-anchor="middle" font-size="10" fill="#9CA3AF" transform="rotate(-45 100 90)"&gt;Rotated&lt;/text&gt;
+&lt;text x="100" y="120" text-anchor="middle" font-size="12" fill="#374151"&gt;Y-Axis Label&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <text x="100" y="30" text-anchor="middle" font-size="16" fill="#374151" font-weight="bold">Chart Title</text>
+                            <text x="20" y="60" text-anchor="start" font-size="12" fill="#6B7280">Start</text>
+                            <text x="100" y="60" text-anchor="middle" font-size="12" fill="#6B7280">Middle</text>
+                            <text x="180" y="60" text-anchor="end" font-size="12" fill="#6B7280">End</text>
+                            <text x="100" y="90" text-anchor="middle" font-size="10" fill="#9CA3AF" transform="rotate(-45 100 90)">Rotated</text>
+                            <text x="100" y="120" text-anchor="middle" font-size="12" fill="#374151">Y-Axis Label</text>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Grid Lines</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="150" viewBox="0 0 200 150"&gt;
+&lt;line x1="30" y1="30" x2="30" y2="120" stroke="#374151" stroke-width="2"&gt;&lt;/line&gt;
+&lt;line x1="30" y1="120" x2="170" y2="120" stroke="#374151" stroke-width="2"&gt;&lt;/line&gt;
+&lt;line x1="30" y1="100" x2="170" y2="100" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;line x1="30" y1="80" x2="170" y2="80" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;line x1="30" y1="60" x2="170" y2="60" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;line x1="30" y1="40" x2="170" y2="40" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;line x1="50" y1="30" x2="50" y2="120" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;line x1="90" y1="30" x2="90" y2="120" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;line x1="130" y1="30" x2="130" y2="120" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/line&gt;
+&lt;text x="100" y="15" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Grid System&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <line x1="30" y1="30" x2="30" y2="120" stroke="#374151" stroke-width="2"></line>
+                            <line x1="30" y1="120" x2="170" y2="120" stroke="#374151" stroke-width="2"></line>
+                            <line x1="30" y1="100" x2="170" y2="100" stroke="#E5E7EB" stroke-width="1"></line>
+                            <line x1="30" y1="80" x2="170" y2="80" stroke="#E5E7EB" stroke-width="1"></line>
+                            <line x1="30" y1="60" x2="170" y2="60" stroke="#E5E7EB" stroke-width="1"></line>
+                            <line x1="30" y1="40" x2="170" y2="40" stroke="#E5E7EB" stroke-width="1"></line>
+                            <line x1="50" y1="30" x2="50" y2="120" stroke="#E5E7EB" stroke-width="1"></line>
+                            <line x1="90" y1="30" x2="90" y2="120" stroke="#E5E7EB" stroke-width="1"></line>
+                            <line x1="130" y1="30" x2="130" y2="120" stroke="#E5E7EB" stroke-width="1"></line>
+                            <text x="100" y="15" text-anchor="middle" font-size="12" fill="#6B7280">Grid System</text>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Data Points</h3>
+                    <pre class="bg-gray-100 p-2 rounded text-sm overflow-x-auto"><code>&lt;svg width="200" height="150" viewBox="0 0 200 150"&gt;
+&lt;polyline points="30,100 60,80 90,120 120,60 150,90 180,50" fill="none" stroke="#E5E7EB" stroke-width="1"&gt;&lt;/polyline&gt;
+&lt;circle cx="30" cy="100" r="4" fill="#3B82F6" stroke="#fff" stroke-width="2"&gt;&lt;/circle&gt;
+&lt;circle cx="60" cy="80" r="4" fill="#10B981" stroke="#fff" stroke-width="2"&gt;&lt;/circle&gt;
+&lt;circle cx="90" cy="120" r="4" fill="#F59E0B" stroke="#fff" stroke-width="2"&gt;&lt;/circle&gt;
+&lt;circle cx="120" cy="60" r="4" fill="#EF4444" stroke="#fff" stroke-width="2"&gt;&lt;/circle&gt;
+&lt;circle cx="150" cy="90" r="4" fill="#8B5CF6" stroke="#fff" stroke-width="2"&gt;&lt;/circle&gt;
+&lt;circle cx="180" cy="50" r="4" fill="#EC4899" stroke="#fff" stroke-width="2"&gt;&lt;/circle&gt;
+&lt;text x="100" y="20" text-anchor="middle" font-size="12" fill="#6B7280"&gt;Data Points&lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+                    <div class="mt-2 border rounded">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <polyline points="30,100 60,80 90,120 120,60 150,90 180,50" fill="none" stroke="#E5E7EB" stroke-width="1"></polyline>
+                            <circle cx="30" cy="100" r="4" fill="#3B82F6" stroke="#fff" stroke-width="2"></circle>
+                            <circle cx="60" cy="80" r="4" fill="#10B981" stroke="#fff" stroke-width="2"></circle>
+                            <circle cx="90" cy="120" r="4" fill="#F59E0B" stroke="#fff" stroke-width="2"></circle>
+                            <circle cx="120" cy="60" r="4" fill="#EF4444" stroke="#fff" stroke-width="2"></circle>
+                            <circle cx="150" cy="90" r="4" fill="#8B5CF6" stroke="#fff" stroke-width="2"></circle>
+                            <circle cx="180" cy="50" r="4" fill="#EC4899" stroke="#fff" stroke-width="2"></circle>
+                            <text x="100" y="20" text-anchor="middle" font-size="12" fill="#6B7280">Data Points</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Styling & Attributes -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Key Attributes</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Fill &amp; Stroke</h3>
+                    <ul class="text-sm space-y-1">
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">fill="#3B82F6"</code> - Fill color</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">stroke="#000"</code> - Outline color</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">stroke-width="2"</code> - Outline thickness</li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">fill-opacity="0.8"</code> - Transparency</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-600 mb-2">Text Positioning</h3>
+                    <ul class="text-sm space-y-1">
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">text-anchor="start|middle|end"</code></li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">dominant-baseline="middle"</code></li>
+                        <li><code class="bg-gray-100 px-2 py-1 rounded">transform="rotate(45)"</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body></html>
