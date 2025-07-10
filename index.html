@@ -23,6 +23,9 @@
 			<br />
 			<input type="range" oninput="setInnerRadius(this.value)" name="inner-radius" id="inner-radius" min="0.1" max="50" step="0.1" value="2" /> <span id="inner-radius-value">2</span>
 		</label>
+
+		<button onclick="showNormalPie()">Show Pie/Donut Chart</button>
+		<button onclick="showMultiSeriesPie()">Show Multi Series Chart</button>
 	</fieldset>
 
 
@@ -90,7 +93,7 @@
 		const pieConfig = {
 			type: 'pie',
 			sortOrder: 'value', // TODO: allow for enum-by-way-of-string or CB
-			gap: 2, // in degrees (seems good, yea? I mean, certainly not radians; that would be basically anti-user. Or! We could use this opportunity to champion Tau (which btw, Tau := 0.5 * Pi. See: https://www.tauday.com/tau-manifesto and join the party))
+			gap: 2, // TODO 2025-07-10: gotta kill this.
 		};
 
 
@@ -128,9 +131,11 @@
 			return path;
 		}
 
-		drawPieChart = (data, config, innerRadius = 1) => {
-			// Reset any existing chart
+		const reset = () => {
 			document.getElementById('pie-chart').innerHTML = '';
+		}
+
+		drawPieChart = (data, config, innerRadius = 1, outerRadius = 50) => {
 
 			// we don't have 360 degrees available to us, due to the gaps between segments
 			const totalDegreesForSegments = 360;// - (data.length * config.gap); // Note: linearly, this would be data.length-1. But since we're in a circle, we have 1 extra to close out between the last and first
@@ -146,6 +151,7 @@
 					}
 
 					d.r0 = innerRadius;
+					d.r1 = outerRadius;
 
 					return d;
 				}
@@ -161,6 +167,7 @@
 			});
 		};
 
+		reset();
 		drawPieChart(pieData, pieConfig);
 
 		window.addEventListener('mouseover', (e) => {
@@ -169,9 +176,11 @@
 			if (elem.hasAttribute('data-datum')) {
 				const datum = JSON.parse(elem.getAttribute('data-datum'));
 				const tooltip = document.getElementById(`tooltip-${datum.label}`);
-				tooltip.style.position = 'fixed'; // really, we'll want this to be position: absolute. but the calculations for proof of concept are easier with position: fixed
-				tooltip.style.left = `${left + 0.5 * width}px`;
-				tooltip.style.top = `${top + 0.5 * height}px`;
+				if (tooltip) {
+					tooltip.style.position = 'fixed'; // really, we'll want this to be position: absolute. but the calculations for proof of concept are easier with position: fixed
+					tooltip.style.left = `${left + 0.5 * width}px`;
+					tooltip.style.top = `${top + 0.5 * height}px`;
+				}
 			}
 		});
 
@@ -180,7 +189,9 @@
 			if (elem.hasAttribute('data-datum')) {
 				const datum = JSON.parse(elem.getAttribute('data-datum'));
 				const tooltip = document.getElementById(`tooltip-${datum.label}`);
-				tooltip.setAttribute('style', '');
+				if (tooltip) {
+					tooltip.setAttribute('style', '');
+				}
 			}
 		});
 
@@ -191,8 +202,80 @@
 		const setInnerRadius = (r) => {
 			pieConfig.innerRadius = r;
 			document.getElementById('inner-radius-value').innerHTML = r;
+			reset();
 			drawPieChart(pieData, pieConfig, r);
 		};
+
+
+		const showNormalPie = () => {
+			reset();
+			drawPieChart(pieData, pieConfig);
+		};
+
+
+		const showMultiSeriesPie = () => {
+			reset();
+
+			const serieses = [
+				{
+					data: processData([
+						{label: 'Blueberry', value: 12, color: 'rgb(255, 200, 0)'},
+						{label: 'Pi', value: 7, color: 'rgb(255, 200, 50)'},
+						{label: 'Snozzberry', value: 1, color: 'rgb(255, 200, 100)'},
+						{label: 'Pumpkin', value: 17, color: 'rgb(255, 200, 150)'},
+						{label: 'Apple', value: 26, color: 'rgb(255, 200, 200)'},
+					]),
+					config: {
+						type: 'pie',
+						sortOrder: 'value',
+						gap: 2,
+						r0: 2,
+						r1: 15,
+					}
+				},
+
+				{
+					data: processData([
+						{label: 'Banana', value: 3, color: 'rgb(255, 0, 200)'},
+						{label: 'Orange', value: 17, color: 'rgb(255, 50, 200)'},
+						{label: 'Soylent Green', value: 6, color: 'rgb(255, 100, 200)'},
+						{label: 'The Great Pumpkin', value: 6, color: 'rgb(255, 150, 200)'},
+						{label: 'Tissue', value: 9, color: 'rgb(255, 200, 200)'},
+					]),
+					config: {
+						type: 'pie',
+						sortOrder: 'value',
+						gap: 2,
+						r0: 16,
+						r1: 30,
+					}
+				},
+
+				{
+					data: processData([
+						{label: 'Foo', value: 4, color: 'rgb(200, 0, 255)'},
+						{label: 'Bar', value: 7, color: 'rgb(200, 50, 255)'},
+						{label: 'Baz', value: 2, color: 'rgb(200, 100, 255)'},
+					]),
+					config: {
+						type: 'pie',
+						sortOrder: 'value',
+						gap: 2,
+						r0: 31,
+						r1: 46,
+					}
+				},
+			];
+
+			serieses.forEach(({ data, config }) => {
+				console.log(data, config);
+				drawPieChart(data, config, config.r0, config.r1)
+			})
+		}
+
+
+
+		showNormalPie();
 	</script>
 </body>
 </html>
