@@ -17,6 +17,14 @@
 		<svg id="pie-chart" width="700" height="700" viewBox="0 0 100 100"></svg>
 	</div>
 
+	<fieldset>
+		<label for="inner-radius">
+			Inner Radius
+			<br />
+			<input type="range" oninput="setInnerRadius(this.value)" name="inner-radius" id="inner-radius" min="0.1" max="50" step="0.1" value="2" /> <span id="inner-radius-value">2</span>
+		</label>
+	</fieldset>
+
 
 	<hr />
 	<h3>Tooltips that would normally be hidden / generated on demand:</h3>
@@ -120,7 +128,10 @@
 			return path;
 		}
 
-		drawPieChart = (data, config) => {
+		drawPieChart = (data, config, innerRadius = 1) => {
+			// Reset any existing chart
+			document.getElementById('pie-chart').innerHTML = '';
+
 			// we don't have 360 degrees available to us, due to the gaps between segments
 			const totalDegreesForSegments = 360;// - (data.length * config.gap); // Note: linearly, this would be data.length-1. But since we're in a circle, we have 1 extra to close out between the last and first
 			data = data
@@ -133,6 +144,8 @@
 						d.startAngle = data[index - 1].endAngle;// + pieConfig.gap;
 						d.endAngle = d.startAngle + (d.percentage * totalDegreesForSegments);
 					}
+
+					d.r0 = innerRadius;
 
 					return d;
 				}
@@ -170,6 +183,16 @@
 				tooltip.setAttribute('style', '');
 			}
 		});
+
+
+		///
+		/// Sandbox stuff (e.g., form controls / buttons)
+		///
+		const setInnerRadius = (r) => {
+			pieConfig.innerRadius = r;
+			document.getElementById('inner-radius-value').innerHTML = r;
+			drawPieChart(pieData, pieConfig, r);
+		};
 	</script>
 </body>
 </html>
