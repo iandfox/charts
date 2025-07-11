@@ -37,8 +37,6 @@
 				Radial offset = <input type="range" v-model.number="offsetRadius" min="0" max="50" id="offsetRadius" name="offsetRadius" /> {{ offsetRadius }}
 				<br />
 				<small><em>(Useful for hover effect -> popout)</em></small>
-				<br />
-				<small><em>Bug: segment doesn't "pop out" so much as it "gets completely reshaped"</em></small> <!-- TODO 2025-07-10: Bug: segment doesn't "pop out" so much as it "gets completely reshaped" -->
 			</label>
 		</div>
 		<code>path d="{{ segment.toSVGPathDefinition({ fromAngle: toValue(fromAngle), offsetRadius: toValue(offsetRadius) }) }}"</code>

@@ -1,5 +1,6 @@
 <script setup>
 import PlaygroundDonutSegmentSVG from './components/PlaygroundDonutSegmentSVG.vue'
+import PlaygroundDonutSVG from './components/PlaygroundDonutSVG.vue';
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import PlaygroundDonutSegmentSVG from './components/PlaygroundDonutSegmentSVG.vu
 </header>
 
 <main>
+	<PlaygroundDonutSVG />
 	<PlaygroundDonutSegmentSVG />
 </main>
 </template>

@@ -127,7 +127,7 @@ String.prototype.hexEncode = function() {
 	return output;
 }
 String.prototype.toHexColor = function() {
-	return '#' + this.hexEncode().slice(-6);
+	return '#' + this.hexEncode().slice(-3) + this.hexEncode().slice(0, 3);
 }
 
 
