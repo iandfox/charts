@@ -4,7 +4,6 @@
 	<pre><code>segment = {{ segment }}</code></pre>
 
 	<div>
-		<code>path d="{{ segment.toSVGPathDefinition({ fromAngle: toValue(fromAngle), offsetRadius: toValue(offsetRadius) }) }}"</code>
 		<svg width="300" height="300" viewBox="-75 -75 150 150" style="box-shadow: 0 0 5px black">
 			<circle cx="0" cy="0" r="50" stroke="teal" fill="white" />
 			<path
@@ -15,12 +14,18 @@
 		</svg>
 
 		<div style="display: flex; flex-direction: column; gap: 13px;">
+			<label for="value">
+				value = <input type="range" v-model.number="segment.value" min="1" :max="segment.total" id="value" name="value" /> {{ segment.value }}
+				<br />
+				<small><em>Bug: arcs with large values (> 50%) do not create a pretty arc</em></small> <!-- TODO 2025-07-10: Bug: arcs with large values (> 50%) do not create a pretty arc -->
+			</label>
+
 			<label for="r0">
-				r0 = <input type="range" v-model="segment.r0" min="2" max="50" id="r0" name="r0" /> {{ segment.r0 }}
+				r0 = <input type="range" v-model.number="segment.r0" min="2" max="50" id="r0" name="r0" /> {{ segment.r0 }}
 			</label>
 
 			<label for="r1">
-				r1 = <input type="range" v-model="segment.r1" min="2" max="50" id="r1" name="r1" /> {{ segment.r1 }}
+				r1 = <input type="range" v-model.number="segment.r1" min="2" max="50" id="r1" name="r1" /> {{ segment.r1 }}
 			</label>
 
 
@@ -36,6 +41,7 @@
 				<small><em>Bug: segment doesn't "pop out" so much as it "gets completely reshaped"</em></small> <!-- TODO 2025-07-10: Bug: segment doesn't "pop out" so much as it "gets completely reshaped" -->
 			</label>
 		</div>
+		<code>path d="{{ segment.toSVGPathDefinition({ fromAngle: toValue(fromAngle), offsetRadius: toValue(offsetRadius) }) }}"</code>
 	</div>
 </fieldset>
 </template>
