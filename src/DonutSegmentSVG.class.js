@@ -56,26 +56,34 @@ export default class DonutSegmentSVG {
 	 * @returns {DonutSegmentVertices}
 	 */
 	calculateVertices({ fromAngle = 0, offsetRadius = 0, center = { x: 0, y: 0 } } = {}) {
+
+		// Offset by translating in the direction of the middle of the segment
+		const angleInTheMiddleOfTheSegment = fromAngle + this.theta / 2;
+		const offset = {
+			x: offsetRadius * Math.cos(angleInTheMiddleOfTheSegment),
+			y: offsetRadius * Math.sin(angleInTheMiddleOfTheSegment)
+		};
+
 		return {
 			p0: {
 				// The most-ACW (aka counter-clockwise) point of the outer arc
-				x: center.x + ((offsetRadius + this.r1) * Math.cos(fromAngle)),
-				y: center.y + ((offsetRadius + this.r1) * Math.sin(fromAngle)),
+				x: center.x + offset.x + (this.r1 * Math.cos(fromAngle)),
+				y: center.y + offset.y + (this.r1 * Math.sin(fromAngle)),
 			},
 			p1: {
 				// The most-CW point of the outer arc
-				x: center.x + ((offsetRadius + this.r1) * Math.cos(fromAngle + this.theta)),
-				y: center.y + ((offsetRadius + this.r1) * Math.sin(fromAngle + this.theta)),
+				x: center.x + offset.x + (this.r1 * Math.cos(fromAngle + this.theta)),
+				y: center.y + offset.y + (this.r1 * Math.sin(fromAngle + this.theta)),
 			},
 			p2: {
 				// The most-CW point of the inner arc
-				x: center.x + ((offsetRadius + this.r0) * Math.cos(fromAngle + this.theta)),
-				y: center.y + ((offsetRadius + this.r0) * Math.sin(fromAngle + this.theta)),
+				x: center.x + offset.x + (this.r0 * Math.cos(fromAngle + this.theta)),
+				y: center.y + offset.y + (this.r0 * Math.sin(fromAngle + this.theta)),
 			},
 			p3: {
 				// The most-ACW point of the inner arc
-				x: center.x + ((offsetRadius + this.r0) * Math.cos(fromAngle)),
-				y: center.y + ((offsetRadius + this.r0) * Math.sin(fromAngle)),
+				x: center.x + offset.x + (this.r0 * Math.cos(fromAngle)),
+				y: center.y + offset.y + (this.r0 * Math.sin(fromAngle)),
 			},
 		}
 	}
@@ -92,6 +100,7 @@ export default class DonutSegmentSVG {
 	 */
 	toSVGPathDefinition({ fromAngle = 0, offsetRadius = 0, center = { x: 0, y: 0 } } = {}) { // TODO 2025-07-10: these are awful variable names
 		const { p0, p1, p2, p3 } = this.calculateVertices({ fromAngle, offsetRadius, center });
+
 		let output = [];
 		output.push(`M ${center.x},${center.y}`); // Move to center (unnecessary, but good to illustrate)
 		output.push(`M ${p3.x},${p3.y}`); // Move to 3rd point of arc, which is the innermost anti-clockwise-est point, and therefore the 'closest,' lexicographically speaking, to center. (points on an arc segment are a no-win variable naming situation)
