@@ -78,32 +78,29 @@ export default class DonutSegmentSVG {
 				y: center.y + ((offsetRadius + this.r0) * Math.sin(fromAngle)),
 			},
 		}
-
-
-		/*
-		// (x0, y0) := the most-CCW (CCW - counter-clockwise aka anti-clockwise) point on the inner arc
-		// (x1, y1) := the most-CCW point on the outer arc
-		// (x2, y2) := the most-CW point on the outer arc
-		// (x3, y3) := the most-CW point on the inner arc
-
-		const x0 = centerX + r0 * Math.cos(startAngle * Math.PI / 180);
-		const y0 = centerY + r0 * Math.sin(startAngle * Math.PI / 180);
-		const x1 = centerX + r1 * Math.cos(startAngle * Math.PI / 180);
-		const y1 = centerY + r1 * Math.sin(startAngle * Math.PI / 180);
-		const x2 = centerX + r1 * Math.cos(endAngle * Math.PI / 180);
-		const y2 = centerY + r1 * Math.sin(endAngle * Math.PI / 180);
-		const x3 = centerX + r0 * Math.cos(endAngle * Math.PI / 180);
-		const y3 = centerY + r0 * Math.sin(endAngle * Math.PI / 180); */
 	}
 
 	/**
+	 * Gets the path string used in the path's [d="..."] attribute. This could be useful for attaching this function
+	 * reactively to the path's attr.
+	 *
+	 * TODO 2025-07-10: should we be defining vertices with relative coordinates/paths? That seems a question with equal answers tbh
 	 *
 	 * @param {CalculateVerticesOptions}
 	 *
 	 * @returns {string} The definition of the path that you should put into the `<path d="">` attribute
 	 */
-	toSVGPathDefinition({ fromAngle = 0, offsetRadius = 0, center = { x: 0, y: 0 } } = {}) {
-		//
+	toSVGPathDefinition({ fromAngle = 0, offsetRadius = 0, center = { x: 0, y: 0 } } = {}) { // TODO 2025-07-10: these are awful variable names
+		const { p0, p1, p2, p3 } = this.calculateVertices({ fromAngle, offsetRadius, center });
+		let output = [];
+		output.push(`M ${center.x},${center.y}`); // Move to center (unnecessary, but good to illustrate)
+		output.push(`M ${p3.x},${p3.y}`); // Move to 3rd point of arc, which is the innermost anti-clockwise-est point, and therefore the 'closest,' lexicographically speaking, to center. (points on an arc segment are a no-win variable naming situation)
+		output.push(`L ${p0.x},${p0.y}`); // Line out to 0th point of arc, which is the outermost anti-clockwise-est pt
+		output.push(`A ${this.r1},${this.r1} 0 0 1 ${p1.x},${p1.y}`); // Arc clockwise to p1 (outermost, most clockwise)
+		output.push(`L ${p2.x},${p2.y}`); // Line down to p2 (innermost, most clockwise)
+		output.push(`A ${this.r0},${this.r0} 0 0 0 ${p3.x},${p3.y}`); // Arc backwards to p3
+
+		return output.join(' '); // NOTE 2025-07-10: Doing this as a big string template or just string concat is preferred. But arrays look (and play) nicer during dev.
 	}
 }
 
@@ -112,16 +109,16 @@ export { DonutSegmentSVG };
 
 
 
-/// Convert strings (i.e., labels) to hex colors consistently:
+/// Convert strings (i.e., labels) to hex colors consistently. // TODO 2025-07-10: Obviously I don't want to ship something with these sorts of debug-esque functions glomped onto String.prototype. Need to kill these, someday soon.
 String.prototype.hexEncode = function() {
 	let output = "";
 	for (let i = 0; i < this.length; i++) {
 		output += (`000${this.charCodeAt(i).toString(16)}`).slice(-4);
 	}
-	return result;
+	return output;
 }
 String.prototype.toHexColor = function() {
-	return '#' + this.hexEncode().slice(6);
+	return '#' + this.hexEncode().slice(-6);
 }
 
 
