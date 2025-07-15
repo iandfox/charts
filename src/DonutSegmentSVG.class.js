@@ -19,6 +19,7 @@
  * r1 := the radius of the outer arc
  */
 export default class DonutSegmentSVG {
+
 	constructor({
 		label,
 		value,
