@@ -1,17 +1,20 @@
 <template>
 <fieldset>
 	<h2>Donut testing</h2>
-
+hover states = {{ hoverStates }}
 	<div>
 		<svg width="300" height="300" viewBox="-75 -75 150 150" style="box-shadow: 0 0 5px black">
-			<circle cx="0" cy="0" r="50" stroke="teal" fill="white" />
 			<path
-				v-for="segment in donut.getSegments()"
-				:d="segment.toSVGPathDefinition({ fromAngle: segment.fromAngle, offsetRadius: toValue(offsetRadius) })"
-				:fill="segment.color"
 				xmlns="http://www.w3.org/2000/svg"
+				v-for="segment in donut.getSegments()"
+				:d="segment.toSVGPathDefinition({
+					fromAngle: segment.fromAngle,
+					offsetRadius: toValue(offsetRadius) + (hoverStates[segment.label] ? 3 : 0)
+				})"
+				:fill="segment.color"
+				@mouseover="setHoverState(segment, true)"
+				@mouseout="setHoverState(segment, false)"
 			/>
-			<!-- TODO: need to do a partial sum of the fromAngle, but I don't want to yet -->
 		</svg>
 
 		<div style="display: flex; flex-direction: column; gap: 13px;">
@@ -19,8 +22,12 @@
 				r0 = <input type="range" v-model.number="r0" min="2" max="50" id="r0" name="r0" /> {{ r0 }}
 			</label>
 
+			<label for="fromAngle">
+				Offset Angle = <input type="range" v-model.number="fromAngle" min="0" max="6.28" step="0.01" id="fromAngle" name="fromAngle" /> {{ fromAngle }}
+			</label>
+
 			<label for="offsetRadius">
-				Radial offset = <input type="range" v-model.number="offsetRadius" min="0" max="50" id="offsetRadius" name="offsetRadius" /> {{ offsetRadius }}
+				Radial offset for all = <input type="range" v-model.number="offsetRadius" min="0" max="50" id="offsetRadius" name="offsetRadius" /> {{ offsetRadius }}
 			</label>
 		</div>
 	</div>
@@ -32,16 +39,47 @@
 	import Donut from '../../../src/Donut.class.js';
 	import { ref, toValue, reactive, computed } from 'vue';
 
-	const fromAngle = ref(0);
-	const offsetRadius = ref(0);
+	const _r0 = ref(10);
+	const r0 = computed({
+		get() {
+			return _r0.value;
+		},
+		set(v) {
+			_r0.value = v;
+			donut._data.forEach((datum) => {
+				datum.r0 = v;
+			});
+		}
+	});
 
+
+	const _fromAngle = ref(0);
+	const fromAngle = computed({
+		get() {
+			return toValue(_fromAngle);
+		},
+		set(v) {
+			_fromAngle.value = v;
+			donut._data.forEach((datum) => {
+				datum.r0 = v;
+			});
+		}
+	});
+	const offsetRadius = ref(0);
 	const donut = new Donut();
+
+	const hoverStates = ref({});
+
+
+	const setHoverState = (segment, val) => {
+		hoverStates.value[segment.label] = val;
+	}
 
 	donut.addSegment({
 		label: 'Pi Charts',
 		value: 5,
 		total: 23,
-		r0: 2,
+		r0: 10,
 		r1: 50,
 	});
 
@@ -49,7 +87,7 @@
 		label: 'Blueberry',
 		value: 10,
 		total: 23,
-		r0: 2,
+		r0: 10,
 		r1: 50,
 	});
 
@@ -57,21 +95,7 @@
 		label: 'Apple',
 		value: 8,
 		total: 23,
-		r0: 2,
+		r0: 10,
 		r1: 50,
 	});
-
-const _r0 = ref(2);
-
-const r0 = computed({
-	get() {
-		return _r0.value;
-	},
-	set(v) {
-		_r0.value = v;
-		donut._data.forEach((datum) => {
-			datum.r0 = v;
-		});
-	}
-});
 </script>
