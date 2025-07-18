@@ -133,9 +133,20 @@ export default class BaseDonutSegment {
 		}
 		
 		const angle = this.initialRotation + rotation + (at * this.theta);
-		const r = offset + this.r0 + (along * (this.r1 - this.r0));
+		const r = this.r0 + (along * (this.r1 - this.r0));
 		
-		return new EuclideanPoint({ r, angle });
+		const point = new EuclideanPoint({ r, angle });
+		
+		if (offset !== 0) {
+			// Shift away from center along middle of segment
+			const midAngle = this.initialRotation + rotation + (0.5 * this.theta);
+			point.shift({
+				x: offset * Math.cos(midAngle),
+				y: offset * Math.sin(midAngle)
+			});
+		}
+		
+		return point;
 	}
 	
 	

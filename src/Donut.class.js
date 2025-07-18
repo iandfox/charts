@@ -3,12 +3,16 @@ import BaseDonutSegment from './BaseDonutSegment.class';
 
 export default class Donut {
 	_segments = [];
+	
+	_defaultSegmentClass = BaseDonutSegment;
 
 	constructor({ data = [], segmentClass = BaseDonutSegment } = {}) {
+		this._defaultSegmentClass = segmentClass;
+		
 		let runningSumOfAngles = 0; // Track initial rotation of each segment
 		
 		data.forEach((datum) => {
-			const segment = this.addSegment(datum, { rotation: runningSumOfAngles, segmentClass });
+			const segment = this._addSegment(datum, { rotation: runningSumOfAngles, segmentClass });
 			runningSumOfAngles += segment.theta;
 		});
 	}
@@ -19,7 +23,7 @@ export default class Donut {
 	}
 	
 
-	addSegment(segmentData, { rotation = 0, segmentClass = BaseDonutSegment } = {}) {
+	_addSegment(segmentData, { rotation = 0, segmentClass = this._defaultSegmentClass } = {}) {
 		if (segmentData instanceof segmentClass) {
 			segmentData.initialRotation = rotation;
 			this._segments.push(segmentData);
