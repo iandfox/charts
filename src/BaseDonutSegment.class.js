@@ -44,9 +44,9 @@ export default class BaseDonutSegment {
 		label,
 		value,
 		total, // Used to calculate theta
-		r0, // TODO 2025-07-10: Probably rename this to `innerRadius` for normal people // NOTE 2025-07-18: Some libraries call it the `hole` .. but if it's not an actual donut, or if we're in a multi-series chart, this makes less sense.
-		r1, // TODO 2025-07-10: Probably rename this to `outerRadius` for normal people, but see note, above
-		rotation,
+		r0,
+		r1,
+		rotation = 0,
 	}) {
 		this.label = label;
 		this.value = value;
@@ -56,7 +56,7 @@ export default class BaseDonutSegment {
 		
 		this._theta = (2 * Math.PI) * (this.value / this.total); // NOTE 2025-07-18: I was calculating this on-demand for reactivity porpoises, but it's likely not necessary. I'll at least get it behind a getter, in case I want to refactor
 		
-		this._rotation = parseFloat(rotation) || 0;
+		this.initialRotation = parseFloat(rotation) || 0;
 	}
 	
 	
@@ -91,9 +91,10 @@ export default class BaseDonutSegment {
 	
 	/**
 	 * Gets a point within the segment. Values for `at` and `along` are normalized, and should be between 0 and 1.
-	 * If a point outside the segment is desired, these boundaries can be ignored. We can also do an initial rotation (to
-	 * position the start of the segment within a chart) or an offset - which 'pops out' the segment from the center
-	 * 
+	 * If a point outside the segment is desired, these boundaries can be ignored. We can also do an initial rotation
+	 * (to position the start of the segment within a chart) or an offset - which 'pops out' the segment from the
+	 * center
+	 *
 	 *        ________________
 	 *       /                \
 	 *      /                  \
@@ -108,7 +109,8 @@ export default class BaseDonutSegment {
 	 * @param {number} at       Normalized angle position within segment. 0 = most-ACW, 1 = most-CW
 	 * @param {number} along    Normalized radial distance from inner arc. 0 = inner arc. 1 = outer arc
 	 * @param {number} rotation Initial rotation of segment within donut (Optional, default 0)
-	 * @param {number} offset   How far away, in non-normalized units, to pop this segment from center (Optional, default 0)
+	 * @param {number} offset   How far away, in non-normalized units, to pop this segment from center (Optional,
+	 *     default 0)
 	 *
 	 * @returns {EuclideanPoint}
 	 */

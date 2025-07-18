@@ -32,9 +32,10 @@ export default class DonutSegmentSVG extends BaseDonutSegment {
 		total,
 		r0,
 		r1,
+		rotation = 0,
 		color = null
 	}) {
-		super({ label, value, total, r0, r1 });
+		super({ label, value, total, r0, r1, rotation });
 		
 		this.color = color || label.toHexColor(); // see String.prototype.toHexColor, at the end of this file, for now
 	}

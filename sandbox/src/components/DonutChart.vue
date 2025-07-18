@@ -4,6 +4,7 @@
 		<h2>Donut testing</h2>
 		
 		<div>
+			{{donut}}
 			<svg width="300" height="300" viewBox="-75 -75 150 150" style="box-shadow: 0 0 5px black">
 				<g
 					v-for="(segment, segmentIndex) in donut.segments"
