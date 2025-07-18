@@ -34,8 +34,8 @@ export default class BaseDonutSegment {
 		label,
 		value,
 		total, // Used to calculate theta
-		r0, // TODO 2025-07-10: Probably rename this to `innerRadius` for normal people // 2025-07-18: Some libs call it the hole
-		r1 // TODO 2025-07-10: Probably rename this to `outerRadius` for normal people,
+		r0, // TODO 2025-07-10: Probably rename this to `innerRadius` for normal people // NOTE 2025-07-18: Some libraries call it the `hole` .. but if it's not an actual donut, or if we're in a multi-series chart, this makes less sense.
+		r1 // TODO 2025-07-10: Probably rename this to `outerRadius` for normal people, but see note, above
 	}) {
 		this.label = label;
 		this.value = value;
@@ -68,8 +68,7 @@ export default class BaseDonutSegment {
 	 * @param {number} at       Normalized angle position within segment. 0 = most-ACW, 1 = most-CW
 	 * @param {number} along    Normalized radial distance from inner arc. 0 = inner arc. 1 = outer arc
 	 * @param {number} rotation Initial rotation of segment within donut (Optional, default 0)
-	 * @param {number} offset   How far away, in non-normalized units, to pop this segment from center (Optional,
-	 *     default 0)
+	 * @param {number} offset   How far away, in non-normalized units, to pop this segment from center (Optional, default 0)
 	 *
 	 * @returns {EuclideanPoint}
 	 */

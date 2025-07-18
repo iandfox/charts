@@ -1,4 +1,12 @@
 export class EuclideanPoint {
+	/**
+	 * One of: (x,y) or (r, angle) must be defined. If both are defined, the (x,y) is used
+	 *
+	 * @param {number|null} x
+	 * @param {number|null} y
+	 * @param {number|null} r radius
+	 * @param {number|null} angle in radians
+	 */
 	constructor({ x = null, y = null, r = null, angle = null }) {
 		// Make sure we have either x,y or r,theta
 		if (
