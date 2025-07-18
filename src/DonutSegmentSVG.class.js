@@ -22,6 +22,9 @@ import { EuclideanPoint } from './EuclideanPoint.class';
  * r1 := the radius of the outer arc
  */
 export default class DonutSegmentSVG extends BaseDonutSegment {
+	
+	color = '#000000';
+	_isHovering = false;
 
 	constructor({
 		label,
@@ -34,6 +37,14 @@ export default class DonutSegmentSVG extends BaseDonutSegment {
 		super({ label, value, total, r0, r1 });
 		
 		this.color = color || label.toHexColor(); // see String.prototype.toHexColor, at the end of this file, for now
+	}
+	
+	
+	get isHovering() {
+		return this._isHovering;
+	}
+	set isHovering(value) {
+		this._isHovering = value;
 	}
 	
 	

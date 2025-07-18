@@ -20,6 +20,8 @@ import { EuclideanPoint } from './EuclideanPoint.class.js';
  *
  * theta := the arc angle (i.e., the angle of the segment at the center of the pie/donut chart)
  *        = 2 * pi * (value / total) (percentage of 360 degrees)
+ *
+ * rotation := the initial rotation of the segment -- where it's at within a donut chart.
  */
 export default class BaseDonutSegment {
 	label = '';
@@ -30,12 +32,21 @@ export default class BaseDonutSegment {
 	
 	_theta = 0;
 	
+	/**
+	 * Initial rotation of the segment, usually based on where it's at in a donut chart. Careful though, because if you
+	 * change up the sortOrder in a donut, you'll need to manually recalculate all the initialRotations.
+	 * @type {number}
+	 * @private
+	 */
+	_rotation = 0;
+	
 	constructor({
 		label,
 		value,
 		total, // Used to calculate theta
 		r0, // TODO 2025-07-10: Probably rename this to `innerRadius` for normal people // NOTE 2025-07-18: Some libraries call it the `hole` .. but if it's not an actual donut, or if we're in a multi-series chart, this makes less sense.
-		r1 // TODO 2025-07-10: Probably rename this to `outerRadius` for normal people, but see note, above
+		r1, // TODO 2025-07-10: Probably rename this to `outerRadius` for normal people, but see note, above
+		rotation,
 	}) {
 		this.label = label;
 		this.value = value;
@@ -44,15 +55,44 @@ export default class BaseDonutSegment {
 		this.r1 = r1;
 		
 		this._theta = (2 * Math.PI) * (this.value / this.total); // NOTE 2025-07-18: I was calculating this on-demand for reactivity porpoises, but it's likely not necessary. I'll at least get it behind a getter, in case I want to refactor
+		
+		this._rotation = parseFloat(rotation) || 0;
 	}
 	
+	
+	/**
+	 * The initial rotation of the segment, usually from where it's placed within a donut.
+	 *
+	 * @returns {number}
+	 */
+	get initialRotation() {
+		return this._rotation;
+	}
+	
+	
+	/**
+	 * Alter the initial rotation of the segment
+	 *
+	 * @param {number} value
+	 */
+	set initialRotation(value) {
+		this._rotation = value;
+	}
+	
+	
+	/**
+	 * The angle of the segment (i.e., the angle for the arc(s))
+	 * @returns {number}
+	 */
 	get theta() {
 		return this._theta;
 	}
 	
 	
 	/**
-	 * Gets a point (usually) within the segment.
+	 * Gets a point within the segment. Values for `at` and `along` are normalized, and should be between 0 and 1.
+	 * If a point outside the segment is desired, these boundaries can be ignored. We can also do an initial rotation (to
+	 * position the start of the segment within a chart) or an offset - which 'pops out' the segment from the center
 	 * 
 	 *        ________________
 	 *       /                \
@@ -90,18 +130,15 @@ export default class BaseDonutSegment {
 			logger.warn('Accessing a point outside the segment. Expected a value between 0 and 1, but got', along);
 		}
 		
-		const angle = rotation + (at * this.theta);
+		const angle = this.initialRotation + rotation + (at * this.theta);
 		const r = offset + this.r0 + (along * (this.r1 - this.r0));
 		
 		return new EuclideanPoint({ r, angle });
 	}
 	
 	
-	
-	
-	
 	/**
-	 * Calculate the vertices of the donut segment
+	 * Calculate the vertices of this donut segment
 	 *
 	 * @param {CalculateVerticesOptions}
 	 *
@@ -111,7 +148,6 @@ export default class BaseDonutSegment {
 		rotation = 0,
 		offset = 0,
 	} = {}) {
-		console.log('hello'); // TODO 2025-07-18: delete
 		return {
 			p0: this.getPoint(0, 0, { rotation, offset }),
 			p1: this.getPoint(0, 1, { rotation, offset }),
