@@ -1,48 +1,84 @@
 <template>
+	
 	<fieldset>
 		<h2>Donut testing</h2>
 	
 		<div>
+			
+			
+			
+			
 			<svg width="300" height="300" viewBox="-75 -75 150 150" style="box-shadow: 0 0 5px black">
-				<path
-					xmlns="http://www.w3.org/2000/svg"
-					v-for="segment in donut.getSegments()"
-					:d="segment.toSVGPathDefinition({
-						fromAngle: segment.fromAngle,
-						offsetRadius: toValue(offsetRadius) + (hoverStates[segment.label] ? 3 : 0)
-					})"
-					:fill="segment.color"
-					@x-mouseover="setHoverState(segment, true)"
-					@x-mouseout="setHoverState(segment, false)"
-					@mousedown="setThing('mousedown')"
-					@x-mousemove="setThing('mousemove')"
-					@mouseout="setThing('mouseout')"
-					@mouseover="setThing('mouseover')"
-					@mouseup="setThing('mouseup')"
-					@pointerdown="setThing('pointerdown')"
-					@pointerover="setThing('pointerover')"
-					@pointerenter="setThing('pointerenter')"
-					@pointerup="setThing('pointerup')"
-					@pointercancel="setThing('pointercancel')"
-					@pointerout="setThing('pointerout')"
-					@pointerleave="setThing('pointerleave')"
-					@click="setThing('click')"
-					@dblclick="setThing('dblclick')"
-					@contextmenu="setThing('contextmenu')"
-					@wheel="setThing('wheel')"
-					@touchstart="setThing('touchstart')"
-					@touchmove="setThing('touchmove')"
-					@touchend="setThing('touchend')"
-				/>
+				<g
+					v-for="(segment, segmentIndex) in donut.getSegments()"
+					:id="`${segment.label}`"
+				>
+					<!-- Animate the segment popping out, without JS! wee! Turns out SVG is kinda cool -->
+					<animateTransform
+						begin="mouseover"
+						end="mouseout"
+						attributeName="transform"
+						type="translate"
+						from="0 0"
+						to="11 5"
+						dur="0.2s"
+						fill="freeze"
+						restart="whenNotActive"
+					/>
+					<!--<animateTransform
+						:begin="`${segment.label}.mouseout`"
+						attributeName="transform"
+						type="translate"
+						from="11 5"
+						to="0 0"
+						dur="0.2s"
+						fill="freeze"
+					/>-->
+					
+					
+					<path
+						xmlns="http://www.w3.org/2000/svg"
+						:d="segment.toSVGPathDefinition({
+							rotation: segment.rotation,
+							offsetRadius: toValue(offsetRadius) + (hoverStates[segment.label] ? 3 : 0)
+						})"
+						:fill="segment.color"
+					/>
+				</g>
 			</svg>
+			
+			<!--
+			
+						@x-mouseover="setHoverState(segment, true)"
+						@x-mouseout="setHoverState(segment, false)"
+						@mousedown="setThing('mousedown')"
+						@x-mousemove="setThing('mousemove')"
+						@mouseout="setThing('mouseout')"
+						@mouseover="setThing('mouseover')"
+						@mouseup="setThing('mouseup')"
+						@pointerdown="setThing('pointerdown')"
+						@pointerover="setThing('pointerover')"
+						@pointerenter="setThing('pointerenter')"
+						@pointerup="setThing('pointerup')"
+						@pointercancel="setThing('pointercancel')"
+						@pointerout="setThing('pointerout')"
+						@pointerleave="setThing('pointerleave')"
+						@click="setThing('click')"
+						@dblclick="setThing('dblclick')"
+						@contextmenu="setThing('contextmenu')"
+						@wheel="setThing('wheel')"
+						@touchstart="setThing('touchstart')"
+						@touchmove="setThing('touchmove')"
+						@touchend="setThing('touchend')"
+						-->
 	
 			<div style="display: flex; flex-direction: column; gap: 13px;">
 				<label for="r0">
 					r0 = <input type="range" v-model.number="r0" min="2" max="50" id="r0" name="r0" /> {{ r0 }}
 				</label>
 	
-				<label for="fromAngle">
-					Offset Angle = <input type="range" v-model.number="fromAngle" min="0" max="6.28" step="0.01" id="fromAngle" name="fromAngle" /> {{ fromAngle }}
+				<label for="rotation">
+					Offset Angle = <input type="range" v-model.number="rotation" min="0" max="6.28" step="0.01" id="rotation" name="rotation" /> {{ rotation }}
 				</label>
 	
 				<label for="offsetRadius">
@@ -71,34 +107,10 @@
 	import Donut from '../../../src/Donut.class.js';
 	import { ref, toValue, reactive, computed } from 'vue';
 
-	const _r0 = ref(10);
-	const r0 = computed({
-		get() {
-			return _r0.value;
-		},
-		set(v) {
-			_r0.value = v;
-			donut._data.forEach((datum) => {
-				datum.r0 = v;
-			});
-		}
-	});
+	const r0 = ref(10);
+	const rotation = ref(0);
+	const globalOffset = ref(0);
 
-
-	const _fromAngle = ref(0);
-	const fromAngle = computed({
-		get() {
-			return toValue(_fromAngle);
-		},
-		set(v) {
-			_fromAngle.value = v;
-			donut._data.forEach((datum) => {
-				datum.r0 = v;
-			});
-		}
-	});
-	const offsetRadius = ref(0);
-	
 	const donut = new Donut();
 
 	const hoverStates = ref({});
