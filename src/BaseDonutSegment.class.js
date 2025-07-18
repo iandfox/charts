@@ -17,12 +17,23 @@
  *
  * r0 := the radius of the inner arc
  * r1 := the radius of the outer arc
+ *
+ *
+ * theta := the arc angle (i.e., the angle of the segment at the center of the pie/donut chart)
  */
 export default class BaseDonutSegment {
+	label = '';
+	value = 0;
+	total = 0;
+	r0 = 0;
+	r1 = 0;
+	
+	_theta = 0; // TODO 2025-07-18: I was calculating this on-demand, but decided to switch to a cached static property
+	
 	constructor({
 		label,
 		value,
-		total,
+		total, // Used to calculate theta
 		r0, // TODO 2025-07-10: Probably rename this to `innerRadius` for normal people // 2025-07-18: Some libs call it the hole
 		r1 // TODO 2025-07-10: Probably rename this to `outerRadius` for normal people,
 	}) {
@@ -31,19 +42,26 @@ export default class BaseDonutSegment {
 		this.total = total;
 		this.r0 = r0;
 		this.r1 = r1;
+		
+		this._theta = (2 * Math.PI) * (this.value / this.total); // NOTE 2025-07-18: I was calculating this on-demand for reactivity porpoises, but it's likely not necessary. I'll at least get it behind a getter, in case I want to refactor
 	}
+	
+	get theta() {
+		return this._getAngleForSegment();
+	}
+	
+	
+	
 	
 	
 	/**
 	 * @returns {number} The angle, in radians, of the segment / arcs
 	 */
 	_getAngleForSegment() {
-		return (2 * Math.PI) * (this.value / this.total);
+		return ;
 	}
 	
-	get theta() {
-		return this._getAngleForSegment();
-	}
+	
 	
 	/**
 	 * Calculate the positions of the vertices of the donut segment (i.e., the arc). See the comment for this class
@@ -53,10 +71,14 @@ export default class BaseDonutSegment {
 	 *
 	 * @returns {DonutSegmentVertices}
 	 */
-	calculateVertices({ fromAngle = 0, offsetRadius = 0, center = { x: 0, y: 0 } } = {}) {
+	calculateVertices({
+		rotation = 0,
+		offsetRadius = 0,
+		center = { x: 0, y: 0 }
+	} = {}) {
 		
 		// Offset by translating in the direction of the middle of the segment
-		const angleInTheMiddleOfTheSegment = fromAngle + this.theta / 2;
+		const angleInTheMiddleOfTheSegment = rotation + this.theta / 2;
 		const offset = {
 			x: offsetRadius * Math.cos(angleInTheMiddleOfTheSegment),
 			y: offsetRadius * Math.sin(angleInTheMiddleOfTheSegment)
@@ -65,23 +87,23 @@ export default class BaseDonutSegment {
 		return {
 			p0: {
 				// The most-ACW (aka counter-clockwise) point of the outer arc
-				x: center.x + offset.x + (this.r1 * Math.cos(fromAngle)),
-				y: center.y + offset.y + (this.r1 * Math.sin(fromAngle)),
+				x: center.x + offset.x + (this.r1 * Math.cos(rotation)),
+				y: center.y + offset.y + (this.r1 * Math.sin(rotation)),
 			},
 			p1: {
 				// The most-CW point of the outer arc
-				x: center.x + offset.x + (this.r1 * Math.cos(fromAngle + this.theta)),
-				y: center.y + offset.y + (this.r1 * Math.sin(fromAngle + this.theta)),
+				x: center.x + offset.x + (this.r1 * Math.cos(rotation + this.theta)),
+				y: center.y + offset.y + (this.r1 * Math.sin(rotation + this.theta)),
 			},
 			p2: {
 				// The most-CW point of the inner arc
-				x: center.x + offset.x + (this.r0 * Math.cos(fromAngle + this.theta)),
-				y: center.y + offset.y + (this.r0 * Math.sin(fromAngle + this.theta)),
+				x: center.x + offset.x + (this.r0 * Math.cos(rotation + this.theta)),
+				y: center.y + offset.y + (this.r0 * Math.sin(rotation + this.theta)),
 			},
 			p3: {
 				// The most-ACW point of the inner arc
-				x: center.x + offset.x + (this.r0 * Math.cos(fromAngle)),
-				y: center.y + offset.y + (this.r0 * Math.sin(fromAngle)),
+				x: center.x + offset.x + (this.r0 * Math.cos(rotation)),
+				y: center.y + offset.y + (this.r0 * Math.sin(rotation)),
 			},
 		}
 	}
