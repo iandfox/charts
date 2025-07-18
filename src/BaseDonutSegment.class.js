@@ -1,25 +1,25 @@
+import { logger } from './utils/logger.js';
+import { EuclideanPoint } from './EuclideanPoint.class.js';
 
 /**
- * p0 -- p1 is the "outer arc"
- * p2 -- p3 is the "inner arc"
- *        ____________
- *       /            \
- *      /              \
- *     p0              p1
- *      |              |
- *      |              |
- *      |  __________  |
- *      | /          \ |
- *      |/            \|
- *      p3            p2
- *
- * p0 := (x0, y0) (similar for p1, p2, p3)
+ * p1 -- p2 is the "outer arc"
+ * p0 -- p3 is the "inner arc" (in a simple donut chart, this is the "hole")
+ *        ________________
+ *       /                \
+ *      /                  \
+ *     p1                  p2
+ *      |                  |
+ *      |                  |
+ *      |  ______________  |
+ *      | /              \ |
+ *      |/                \|
+ *      p0                p3
  *
  * r0 := the radius of the inner arc
  * r1 := the radius of the outer arc
  *
- *
  * theta := the arc angle (i.e., the angle of the segment at the center of the pie/donut chart)
+ *        = 2 * pi * (value / total) (percentage of 360 degrees)
  */
 export default class BaseDonutSegment {
 	label = '';
@@ -28,7 +28,7 @@ export default class BaseDonutSegment {
 	r0 = 0;
 	r1 = 0;
 	
-	_theta = 0; // TODO 2025-07-18: I was calculating this on-demand, but decided to switch to a cached static property
+	_theta = 0;
 	
 	constructor({
 		label,
@@ -47,25 +47,62 @@ export default class BaseDonutSegment {
 	}
 	
 	get theta() {
-		return this._getAngleForSegment();
+		return this._theta;
 	}
 	
 	
-	
-	
-	
 	/**
-	 * @returns {number} The angle, in radians, of the segment / arcs
+	 * Gets a point (usually) within the segment.
+	 * 
+	 *        ________________
+	 *       /                \
+	 *      /                  \
+	 *     p1=getPoint(0,1)    p2=getPoint(1,1)
+	 *      |                  |
+	 *      |                  |
+	 *      |  ______________  |
+	 *      | /              \ |
+	 *      |/                \|
+	 *     p0=getPoint(0,0)   p3=getPoint(1,0)
+	 *
+	 * @param {number} at       Normalized angle position within segment. 0 = most-ACW, 1 = most-CW
+	 * @param {number} along    Normalized radial distance from inner arc. 0 = inner arc. 1 = outer arc
+	 * @param {number} rotation Initial rotation of segment within donut (Optional, default 0)
+	 * @param {number} offset   How far away, in non-normalized units, to pop this segment from center (Optional,
+	 *     default 0)
+	 *
+	 * @returns {EuclideanPoint}
 	 */
-	_getAngleForSegment() {
-		return ;
+	getPoint(
+		at = 0,
+		along = 1,
+		{
+			rotation = 0,
+			offset = 0,
+		} = {}
+	) {
+		if (at < 0 || at > 1) {
+			// Warn, but do not break, if we are outside our comfort zone. It's conceivable we might want to use this someday
+			logger.warn('Accessing a point outside the arc. Expected a value between 0 and 1, but got', at);
+		}
+		
+		if (along < 0 || along > 1) {
+			// Similar to `at`, warn if we're outside the segment
+			logger.warn('Accessing a point outside the segment. Expected a value between 0 and 1, but got', along);
+		}
+		
+		const angle = rotation + (at * this.theta);
+		const r = offset + this.r0 + (along * (this.r1 - this.r0));
+		
+		return new EuclideanPoint({ r, angle });
 	}
 	
 	
 	
+	
+	
 	/**
-	 * Calculate the positions of the vertices of the donut segment (i.e., the arc). See the comment for this class
-	 * definition for which points correspond to which.
+	 * Calculate the vertices of the donut segment
 	 *
 	 * @param {CalculateVerticesOptions}
 	 *
@@ -73,38 +110,14 @@ export default class BaseDonutSegment {
 	 */
 	calculateVertices({
 		rotation = 0,
-		offsetRadius = 0,
-		center = { x: 0, y: 0 }
+		offset = 0,
 	} = {}) {
-		
-		// Offset by translating in the direction of the middle of the segment
-		const angleInTheMiddleOfTheSegment = rotation + this.theta / 2;
-		const offset = {
-			x: offsetRadius * Math.cos(angleInTheMiddleOfTheSegment),
-			y: offsetRadius * Math.sin(angleInTheMiddleOfTheSegment)
-		};
-		
+		console.log('hello'); // TODO 2025-07-18: delete
 		return {
-			p0: {
-				// The most-ACW (aka counter-clockwise) point of the outer arc
-				x: center.x + offset.x + (this.r1 * Math.cos(rotation)),
-				y: center.y + offset.y + (this.r1 * Math.sin(rotation)),
-			},
-			p1: {
-				// The most-CW point of the outer arc
-				x: center.x + offset.x + (this.r1 * Math.cos(rotation + this.theta)),
-				y: center.y + offset.y + (this.r1 * Math.sin(rotation + this.theta)),
-			},
-			p2: {
-				// The most-CW point of the inner arc
-				x: center.x + offset.x + (this.r0 * Math.cos(rotation + this.theta)),
-				y: center.y + offset.y + (this.r0 * Math.sin(rotation + this.theta)),
-			},
-			p3: {
-				// The most-ACW point of the inner arc
-				x: center.x + offset.x + (this.r0 * Math.cos(rotation)),
-				y: center.y + offset.y + (this.r0 * Math.sin(rotation)),
-			},
+			p0: this.getPoint(0, 0, { rotation, offset }),
+			p1: this.getPoint(0, 1, { rotation, offset }),
+			p2: this.getPoint(1, 1, { rotation, offset }),
+			p3: this.getPoint(1, 0, { rotation, offset }),
 		}
 	}
 }
@@ -126,18 +139,17 @@ export default class BaseDonutSegment {
 /**
  * @typedef CalculateVerticesOptions
  * @type {object}
- * @property {number} fromAngle The starting angle from which to draw the segment, in radians
- * @property {number} offsetRadius How far from the center point we'll be drawing the SVG. Useful e.g., when animating
+ * @property {number} rotation The starting angle from which to draw the segment, in radians
+ * @property {number} offset How far from the center point we'll be drawing the SVG. Useful e.g., when animating
  *     it away from center
- * @property {Vertex} center The center of the pie chart.
  */
 
 
 /**
  * @typedef DonutSegmentVertices
  * @type {object}
- * @property {Vertex} p0
- * @property {Vertex} p1
- * @property {Vertex} p2
- * @property {Vertex} p3
+ * @property {EuclideanPoint} p0
+ * @property {EuclideanPoint} p1
+ * @property {EuclideanPoint} p2
+ * @property {EuclideanPoint} p3
  */
