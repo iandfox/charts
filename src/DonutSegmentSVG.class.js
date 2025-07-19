@@ -62,13 +62,15 @@ export default class DonutSegmentSVG extends BaseDonutSegment {
 
 		const center = new EuclideanPoint({ r: 0, angle: 0 });
 		
+		const largeArcFlag = (this.theta > Math.PI) ? 1 : 0;
+		
 		let output = [];
 		output.push(`M ${center.x},${center.y}`); // Move to center (unnecessary, but good to illustrate)
 		output.push(`M ${p0.x},${p0.y}`); // Move to 0th point of arc, which is the innermost anti-clockwise-est point, and therefore the 'closest,' lexicographically speaking, to center. (points on an arc segment are a no-win variable naming situation)
 		output.push(`L ${p1.x},${p1.y}`); // Line out to 1st point of arc, which is the outermost anti-clockwise-est pt
-		output.push(`A ${this.r1},${this.r1} 0 0 1 ${p2.x},${p2.y}`); // Arc clockwise to p2 (outermost, most clockwise)
+		output.push(`A ${this.r1},${this.r1} 0 ${largeArcFlag} 1 ${p2.x},${p2.y}`); // Arc clockwise to p2 (outermost, most clockwise)
 		output.push(`L ${p3.x},${p3.y}`); // Line down to p3 (innermost, most clockwise)
-		output.push(`A ${this.r0},${this.r0} 0 0 0 ${p0.x},${p0.y}`); // Arc backwards to p0
+		output.push(`A ${this.r0},${this.r0} 0 ${largeArcFlag} 0 ${p0.x},${p0.y}`); // Arc backwards to p0
 
 		return output.join(' '); // NOTE 2025-07-10: Doing this as a big string template or just string concat is preferred. But arrays look (and play) nicer during dev.
 	}
