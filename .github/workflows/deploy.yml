@@ -30,6 +30,7 @@ jobs:
             - name: Build app
               run: cd sandbox && npm run build
             
+            # TODO 2025-07-19: Does not seem to be autodeploying.
             - name: Deploy dist to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
               with:
