@@ -103,8 +103,8 @@
 </template>
 
 <script setup>
-	import DonutSegmentSVG from '../../../src/DonutSegmentSVG.class.js';
-	import Donut from '../../../src/Donut.class.js';
+	import DonutSegmentSVG from 'src/DonutSegmentSVG.class.js';
+	import Donut from 'src/Donut.class.js';
 	import { ref, toValue, reactive, computed } from 'vue';
 
 	const r0 = ref(10);

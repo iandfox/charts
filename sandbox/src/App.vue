@@ -1,23 +1,25 @@
 <script setup>
-	import PlaygroundDonutSegmentSVG from './components/PlaygroundDonutSegmentSVG.vue'
-	import PlaygroundDonutSVG from './components/PlaygroundDonutSVG.vue';
-	import DonutChart from '@/components/DonutChart.vue';
+	import PlaygroundLotsOfDonuts from '@/components/playgrounds/PlaygroundLotsOfDonuts.vue';
 </script>
 
 
 <template>
 	<main>
-		<DonutChart />
+		<PlaygroundLotsOfDonuts />
 	</main>
 </template>
+
+<script setup></script>
 
 
 <style scoped>
 	main {
 		min-height: 100vh;
+		width: 100vw;
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		justify-content: start;
+		align-items: start;
+		flex-wrap: wrap;
 		gap: 13px;
 	}
 </style>
